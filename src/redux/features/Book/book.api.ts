@@ -1,4 +1,5 @@
 import baseApi from "@/redux/baseApi";
+import type { BorrowSummary, IResponse } from "@/types";
 
 
  const BooksApi = baseApi.injectEndpoints({
@@ -9,17 +10,75 @@ import baseApi from "@/redux/baseApi";
                 method: "POST",
                 data: bookData,
             }),
-        //     invalidatesTags: ["DRIVER"]
+            invalidatesTags: ["BOOK"]
          }),
           getBooks: builder.query({
             query: () => ({
                 url: "/books",
                 method: "GET",
             }),
-            //  providesTags: [""],
-            //  transformResponse: (response) => response.data
+              providesTags: ["BOOK"],
+              transformResponse: (response) => response.data
         }),
-      
+
+        updateBook: builder.mutation({
+             query: ({ id, data }) => ({
+                url: `/books/${id}`,
+                 method: 'PATCH',
+                 data,
+             }),
+          invalidatesTags: ['BOOK'],
+            }),
+         deleteBook: builder.mutation({
+                query: (id) => ({
+                url: `/books/${id}`,
+                 method: 'DELETE',
+             }),
+            invalidatesTags: ['BOOK'],
+        }),
+
+            borrowBook: builder.mutation<
+             { success: boolean; message: string; data?: unknown },
+             { book: string; quantity: number; dueDate: string }
+                     >({
+             query: (payload) => ({
+             url: "/borrow/create",
+             method: "POST",
+             body: payload,
+         }),
+        invalidatesTags: ["BOOK", "BORROW"],
+        }),
+
+        getBorrowSummary: builder.query<BorrowSummary[], void>({
+         query: () => ({
+             url: "/borrow/summary",
+            method: "GET",
+         }),
+             transformResponse: (response: IResponse<BorrowSummary[]>) => response.data,
+        }),
+
+
+    //      getBorrowSummary: builder.query<
+    //       { book: { title: string; isbn: string };
+    //          totalQuantity: number;
+    //          dueDates: string[];
+    //         }[],
+    //         void > ({
+    //         query: () => ({
+    //             url: "/borrow/summary",
+    //             method: "GET",
+    //         }),
+    //           providesTags: ["BORROW"],
+    //           transformResponse: (
+    //             response: IResponse<
+    //       {
+    //         book: { title: string; isbn: string };
+    //         totalQuantity: number;
+    //         dueDates: string[];
+    //       }[]
+    //     >,
+    //   ) => response.data
+    //     }),
 
         
     
@@ -27,7 +86,14 @@ import baseApi from "@/redux/baseApi";
 })
 
 
-export const {useCreateBookMutation, useGetBooksQuery } = BooksApi;
+export const {
+    useCreateBookMutation,
+    useGetBooksQuery,
+    useUpdateBookMutation, 
+    useDeleteBookMutation,
+    useBorrowBookMutation,
+    useGetBorrowSummaryQuery,
+ } = BooksApi;
 
 
 // const initialState:  = {

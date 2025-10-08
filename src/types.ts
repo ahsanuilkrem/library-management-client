@@ -29,3 +29,31 @@ export interface IBook {
   updatedAt: Date;
 
 }
+
+
+export interface IMeta {
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
+export interface IResponse<T> {
+  success: boolean;
+  message: string;
+  data: T;
+  meta?: IMeta;
+}
+ 
+
+
+export interface Book {
+  title: string;
+  isbn: string;
+}
+
+export interface BorrowSummary {
+  book: Book;
+  totalQuantity: number;
+  dueDates: string[];
+}

@@ -1,18 +1,25 @@
 
 
-import { useGetBooksQuery } from "@/redux/features/Book/book.api";
+import BorrowDialog from "@/components/modules/shared/BorrowDialog";
+import DeleteConfirmDialog from "@/components/modules/shared/DeleteConfirmDialog";
+import EditBookDialog from "@/components/modules/shared/EditBookDialog";
+import { Button } from "@/components/ui/button";
+import { useDeleteBookMutation, useGetBooksQuery } from "@/redux/features/Book/book.api";
 import type { IBook } from "@/types";
+import { BookOpen, Edit, Eye } from "lucide-react";
 
 
 export default function BooksPage() {
 
   const { data, isLoading, isError } = useGetBooksQuery({});
+  const [deleteBook] = useDeleteBookMutation();
+  console.log(data)
 
   if (isLoading) return <div>Loading...</div>;
   if (isError || !data) return <div>Error fetching books.</div>;
 
-  const books: IBook[] = data.data;
-  // console.log(books);
+  const books: IBook[] = data;
+   console.log(books);
 
   return (
     <div>
@@ -22,7 +29,7 @@ export default function BooksPage() {
           <table className="table table-xl border border-gray-300 w-full text-center ">
             <thead className="h-4">
               <tr className="border-b border-gray-300 h-10">
-                <th className="border-r border-gray-300">#</th>
+                <th className="border-r border-gray-300 px-2">#</th>
                 <th className="border-r border-gray-300">Title</th>
                 <th className="border-r border-gray-300">Author</th>
                 <th className="border-r border-gray-300">ISBN</th>
@@ -33,7 +40,7 @@ export default function BooksPage() {
               </tr>
             </thead>
             <tbody>
-              {books.map((book, index) => (
+              {books?.map((book, index) => (
                 <tr key={book._id} className="border-b border-gray-200 h-8">
                   <td className="border-r border-gray-200">{index + 1}</td>
                   <td className="border-r border-gray-200">{book.title}</td>
@@ -49,10 +56,54 @@ export default function BooksPage() {
                       {book.available ? "Available" : "Unavailable"}
                     </span>
                   </td>
-                  <td className="flex">
+                  {/* <td className="flex">
                     <button className="btn btn-sm btn-primary">Edit</button>
-                    <button className="btn btn-sm btn-error ml-2">Delete</button>
-                  </td>
+                    <button  onClick={() => handleDelete(book._id)} className="btn btn-sm btn-error ml-2">Delete</button>
+                    {book.available && (
+                      <button className="btn btn-sm btn-success" onClick={() => handleBorrow(book._id)}>Borrow</button>
+                    )}
+                  </td> */}
+
+                    <td className="px-4 py-3 text-right flex gap-2 justify-end">
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            // onClick={() => handleView(book._id)}
+                            title="View Details"
+                          >
+                            <Eye className="h-4 w-4" />
+                          </Button>
+                          <EditBookDialog
+                            book={book}
+                            trigger={
+                              <Button size="sm" variant="outline" title="Edit">
+                                <Edit className="h-4 w-4" />
+                              </Button>
+                            }
+                          />
+
+                          <DeleteConfirmDialog
+                            title="Delete Book?"
+                            description={`This will permanently delete "${book.title}".`}
+                            onConfirm={() => deleteBook(book._id)}
+                          />
+
+                          <BorrowDialog
+                            bookId={book._id}
+                            availableCopies={book.copies}
+                            trigger={
+                              <Button
+                                size="sm"
+                                variant="secondary"
+                                title="Borrow"
+                              >
+                                <BookOpen className="h-4 w-4" />
+                              </Button>
+                            }
+                          />
+                        </td>
+
+
                 </tr>
               ))}
             </tbody>
