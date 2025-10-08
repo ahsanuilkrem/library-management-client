@@ -1,5 +1,5 @@
 import baseApi from "@/redux/baseApi";
-import type { BorrowSummary, IResponse } from "@/types";
+import type {  IBorrow, IResponse } from "@/types";
 
 
  const BooksApi = baseApi.injectEndpoints({
@@ -13,74 +13,52 @@ import type { BorrowSummary, IResponse } from "@/types";
             invalidatesTags: ["BOOK"]
          }),
           getBooks: builder.query({
-            query: () => ({
+                query: () => ({
                 url: "/books",
                 method: "GET",
             }),
-              providesTags: ["BOOK"],
-              transformResponse: (response) => response.data
+                providesTags: ["BOOK"],
+                transformResponse: (response) => response.data
         }),
 
-        updateBook: builder.mutation({
-             query: ({ id, data }) => ({
+            updateBook: builder.mutation({
+                query: ({ id, data }) => ({
                 url: `/books/${id}`,
-                 method: 'PATCH',
-                 data,
+                method: 'PATCH',
+                data,
              }),
-          invalidatesTags: ['BOOK'],
-            }),
-         deleteBook: builder.mutation({
+                 invalidatesTags: ['BOOK'],
+         }),
+            deleteBook: builder.mutation({
                 query: (id) => ({
                 url: `/books/${id}`,
-                 method: 'DELETE',
+                method: 'DELETE',
              }),
-            invalidatesTags: ['BOOK'],
+                invalidatesTags: ['BOOK'],
         }),
 
             borrowBook: builder.mutation<
-             { success: boolean; message: string; data?: unknown },
-             { book: string; quantity: number; dueDate: string }
-                     >({
-             query: (payload) => ({
-             url: "/borrow/create",
-             method: "POST",
-             body: payload,
+                { success: boolean; message: string; data?: unknown },
+                { bookId: string; quantity: number; dueDate: string }
+                >({
+                query: (payload) => ({
+                url: "/borrow/create",
+                method: "POST",
+                body: payload,
+                
          }),
-        invalidatesTags: ["BOOK", "BORROW"],
+  
+                invalidatesTags: ["BOOK", "BORROW"],
         }),
 
-        getBorrowSummary: builder.query<BorrowSummary[], void>({
-         query: () => ({
-             url: "/borrow/summary",
-            method: "GET",
+        getBorrowSummary: builder.query<IBorrow[], void>({
+                query: () => ({
+                url: "/borrow/summary",
+                method: "GET",
          }),
-             transformResponse: (response: IResponse<BorrowSummary[]>) => response.data,
+                providesTags: ["BORROW"],
+                transformResponse: (response: IResponse<IBorrow[]>) => response.data,
         }),
-
-
-    //      getBorrowSummary: builder.query<
-    //       { book: { title: string; isbn: string };
-    //          totalQuantity: number;
-    //          dueDates: string[];
-    //         }[],
-    //         void > ({
-    //         query: () => ({
-    //             url: "/borrow/summary",
-    //             method: "GET",
-    //         }),
-    //           providesTags: ["BORROW"],
-    //           transformResponse: (
-    //             response: IResponse<
-    //       {
-    //         book: { title: string; isbn: string };
-    //         totalQuantity: number;
-    //         dueDates: string[];
-    //       }[]
-    //     >,
-    //   ) => response.data
-    //     }),
-
-        
     
     }),
 })

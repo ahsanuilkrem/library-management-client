@@ -3,7 +3,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useGetBorrowSummaryQuery } from "@/redux/features/Book/book.api";
-import type { BorrowSummary } from "@/types";
+import type { IBorrow } from "@/types";
 import { useState } from "react";
 
 
@@ -19,7 +19,7 @@ const BorrowSummary = () => {
   const endIndex = Math.min(currentPage * totalRows);
 
    
-   const borrow: BorrowSummary[] | undefined  = data;
+   const borrow: IBorrow[] | undefined  = data;
 
   return (
     <div className="my-16 container mx-auto px-5">

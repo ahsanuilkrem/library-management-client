@@ -1,10 +1,16 @@
-import { createApi } from "@reduxjs/toolkit/query/react"
-import axiosBaseQuery from "./axiosBaseQuery"
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
+//  import axiosBaseQuery from "./axiosBaseQuery"
+import config from "@/config";
 
 
- const baseApi = createApi({
+const baseApi = createApi({
     reducerPath: "baseApi",
-    baseQuery: axiosBaseQuery(),
+    //  baseQuery: axiosBaseQuery(),
+
+    baseQuery: fetchBaseQuery({
+        baseUrl: config.baseUrl,
+        credentials: "include",
+    }),
     tagTypes: ["BOOK", "BORROW"],
     endpoints: () => ({}),
 

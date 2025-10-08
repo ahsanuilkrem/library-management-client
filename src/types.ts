@@ -52,7 +52,7 @@ export interface Book {
   isbn: string;
 }
 
-export interface BorrowSummary {
+export interface IBorrow {
   book: Book;
   totalQuantity: number;
   dueDates: string[];

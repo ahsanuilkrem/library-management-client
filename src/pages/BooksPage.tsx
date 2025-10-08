@@ -6,20 +6,21 @@ import EditBookDialog from "@/components/modules/shared/EditBookDialog";
 import { Button } from "@/components/ui/button";
 import { useDeleteBookMutation, useGetBooksQuery } from "@/redux/features/Book/book.api";
 import type { IBook } from "@/types";
-import { BookOpen, Edit, Eye } from "lucide-react";
+import { BookOpen, Edit3 } from "lucide-react";
 
 
 export default function BooksPage() {
 
   const { data, isLoading, isError } = useGetBooksQuery({});
   const [deleteBook] = useDeleteBookMutation();
-  console.log(data)
+  // console.log(data)
 
   if (isLoading) return <div>Loading...</div>;
   if (isError || !data) return <div>Error fetching books.</div>;
 
   const books: IBook[] = data;
-   console.log(books);
+  // console.log(books);
+ 
 
   return (
     <div>
@@ -56,52 +57,40 @@ export default function BooksPage() {
                       {book.available ? "Available" : "Unavailable"}
                     </span>
                   </td>
-                  {/* <td className="flex">
-                    <button className="btn btn-sm btn-primary">Edit</button>
-                    <button  onClick={() => handleDelete(book._id)} className="btn btn-sm btn-error ml-2">Delete</button>
-                    {book.available && (
-                      <button className="btn btn-sm btn-success" onClick={() => handleBorrow(book._id)}>Borrow</button>
-                    )}
-                  </td> */}
 
-                    <td className="px-4 py-3 text-right flex gap-2 justify-end">
-                          <Button
-                            size="sm"
-                            variant="ghost"
-                            // onClick={() => handleView(book._id)}
-                            title="View Details"
-                          >
-                            <Eye className="h-4 w-4" />
-                          </Button>
-                          <EditBookDialog
-                            book={book}
-                            trigger={
-                              <Button size="sm" variant="outline" title="Edit">
-                                <Edit className="h-4 w-4" />
-                              </Button>
-                            }
-                          />
+                  <td className="px-4 py-3 text-right flex gap-3 justify-center">
+                    <EditBookDialog
+                      book={book}
+                      trigger={
+                        <Button size="sm" variant="outline" title="Edit">
+                          <Edit3 className="h-4 w-4" />
+                        </Button>
+                      }
+                    />
 
-                          <DeleteConfirmDialog
-                            title="Delete Book?"
-                            description={`This will permanently delete "${book.title}".`}
-                            onConfirm={() => deleteBook(book._id)}
-                          />
+                    <DeleteConfirmDialog
+                      title="Delete Book?"
+                      description={`This will permanently delete "${book.title}".`}
+                      onConfirm={() => deleteBook(book._id)}
+                    />
 
-                          <BorrowDialog
-                            bookId={book._id}
-                            availableCopies={book.copies}
-                            trigger={
-                              <Button
-                                size="sm"
-                                variant="secondary"
-                                title="Borrow"
-                              >
-                                <BookOpen className="h-4 w-4" />
-                              </Button>
-                            }
-                          />
-                        </td>
+                    <BorrowDialog
+                      bookId={book._id}
+                      availableCopies={book.copies}
+                      trigger={
+                        <Button
+                          size="sm"
+                          variant="secondary"
+                          title="Borrow"
+                        >
+                          <BookOpen className="h-4 w-4" />
+                        </Button>
+
+                      }
+                      
+                    />
+                     
+                  </td>
 
 
                 </tr>

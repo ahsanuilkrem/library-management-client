@@ -14,7 +14,6 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { toast } from "sonner";
-// import { useBorrowBookMutation } from "@/redux/api/borrow.api";
 import { useMemo } from "react";
 import { useBorrowBookMutation } from "@/redux/features/Book/book.api";
 
@@ -31,6 +30,7 @@ export default function BorrowDialog({
   defaultQuantity = 1,
   availableCopies = 0,
 }: BorrowDialogProps) {
+    // console.log(bookId)
   const [open, setOpen] = useState(false);
   const [quantity, setQuantity] = useState(defaultQuantity);
   const [dueDate, setDueDate] = useState<string>("");
@@ -60,13 +60,15 @@ export default function BorrowDialog({
     }
     try {
       const payload = {
-        book: bookId,
+        bookId:bookId, 
         quantity,
         dueDate: new Date(dueDate).toISOString(),
       };
+      console.log(payload)
       const res = await borrowBook(payload).unwrap();
       toast.success(res?.message || "Borrowed successfully");
       setOpen(false);
+      console.log(res)
     } catch (err: any) {
       toast.error(err?.data?.message || "Failed to borrow");
     }
