@@ -14,22 +14,24 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
-
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useCreateBookMutation } from "@/redux/features/Book/book.api";
 import { toast } from "sonner";
+import { Textarea } from "@/components/ui/textarea";
+import { bookFormSchema } from "@/types";
 
 // ✅ Define schema with Zod
-const bookFormSchema = z.object({
-  title: z.string().min(1),
-  author: z.string().min(1),
-  isbn: z.string().min(5),
-  genre: z.enum(["FICTION", "NON_FICTION", "SCIENCE", "HISTORY"]),
-  copies: z.string().min(0),
-  available: z.boolean(),
-});
+// const bookFormSchema = z.object({
+//   title: z.string().min(1),
+//   author: z.string().min(1),
+//   isbn: z.string().min(5),
+//   genre: z.enum(["FICTION", "NON_FICTION", "SCIENCE", "HISTORY"]),
+//   description:z.string(),
+//   copies: z.string(),
+//   available: z.boolean(),
+// });
 
 
 const AddBook = () => {
@@ -43,17 +45,19 @@ const AddBook = () => {
       author: "",
       isbn: "",
       genre: "FICTION",
+      description: "",
       copies: "",
       available: true,
     },
   });
 
   const onSubmit = async (values: z.infer<typeof bookFormSchema>) => {
-    //  console.log("Submitted Book:", values);
+      console.log("Submitted Book:", values);
 
     const payload = {
       ...values,
-      copies: Number(values.copies),
+      //  isbn: String(values.isbn),
+       copies: Number(values.copies),
     };
     console.log("Submitted Book:", payload);
 
@@ -62,13 +66,12 @@ const AddBook = () => {
       if (result.success) {
         toast.success("Book created successfully");
         form.reset();
+        //  navigate("/booksPage");
       }
       console.log(result)
     } catch (err: any) {
-      // if (err.data?.message === "no token recievd") {
-      //   // navigate("/login");
-      // }
       toast.error(err.data?.message || "Book Alrader Exist");
+      console.error(err)
     }
   
 
@@ -152,6 +155,21 @@ return (
           )}
         />
 
+         {/* Description */}
+        <FormField
+          control={form.control}
+          name="description"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Textarea placeholder="Optional description..." {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         {/* Copies */}
         <FormField
           control={form.control}
@@ -160,7 +178,7 @@ return (
             <FormItem>
               <FormLabel>Copies</FormLabel>
               <FormControl>
-                <Input type="number" min={1} {...field} />
+                <Input placeholder="copies number" type="number"  min={1} {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

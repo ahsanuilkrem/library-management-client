@@ -19,6 +19,8 @@ import type { IBook, Genre } from "@/types";
 import { toast } from "sonner";
 import { BookOpen, Hash, User2, Type } from "lucide-react";
 import { useUpdateBookMutation } from "@/redux/features/Book/book.api";
+import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
 
 type EditBookDialogProps = {
   trigger?: React.ReactNode;
@@ -26,6 +28,7 @@ type EditBookDialogProps = {
 };
 
 export default function EditBookDialog({ trigger, book }: EditBookDialogProps) {
+  // console.log('BOOK', book)
   const [open, setOpen] = useState(false);
   const [form, setForm] = useState<Partial<IBook>>({});
   const [updateBook, { isLoading }] = useUpdateBookMutation();
@@ -39,16 +42,19 @@ export default function EditBookDialog({ trigger, book }: EditBookDialogProps) {
         isbn: book.isbn,
         description: book.description,
         copies: book.copies,
+        available: book.available
+
       });
     }
   }, [open, book]);
 
   const onChange =
     (key: keyof IBook) =>
-    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      const value = key === "copies" ? Number(e.target.value) : e.target.value;
-      setForm((prev) => ({ ...prev, [key]: value as any }));
-    };
+      (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        const value = key === "copies" ? Number(e.target.value) : e.target.value;
+        setForm((prev) => ({ ...prev, [key]: value as any }));
+        console.log(value)
+      };
 
   const submit = async () => {
     const toastId = toast.loading("Book is updating. Please wait");
@@ -60,14 +66,17 @@ export default function EditBookDialog({ trigger, book }: EditBookDialogProps) {
           (payload as any)[k] = form[k];
         }
       });
+      console.log(payload)
 
-      await updateBook({ id: book._id, body: payload }).unwrap();
+      const updatebook = await updateBook({ id: book._id, body: payload }).unwrap();
       toast.success("Book updated successfully", { id: toastId });
       setOpen(false);
+      console.log("updatebook", updatebook)
     } catch (err: any) {
       toast.error(err?.data?.message || "Failed to update book", {
         id: toastId,
       });
+      console.log(err)
     }
   };
 
@@ -105,7 +114,7 @@ export default function EditBookDialog({ trigger, book }: EditBookDialogProps) {
               onChange={onChange("author")}
             />
           </div>
-          <div className="grid gap-2">
+          {/* <div className="grid gap-2">
             <Label htmlFor="genre" className="inline-flex items-center gap-2">
               <BookOpen className="h-4 w-4 text-muted-foreground" /> Genre
             </Label>
@@ -114,6 +123,32 @@ export default function EditBookDialog({ trigger, book }: EditBookDialogProps) {
               value={(form.genre as Genre) || ""}
               onChange={onChange("genre")}
             />
+          </div> */}
+          <div className="grid gap-2">
+            <Label htmlFor="genre" className="inline-flex items-center gap-2">
+              <BookOpen className="h-4 w-4 text-muted-foreground" /> Genre
+            </Label>
+            <Select
+              value={form.genre as Genre}
+              onValueChange={(value) => {
+                setForm((prev) => ({ ...prev, genre: value as Genre }));
+              }}
+ >
+              <SelectTrigger className="inline-flex items-center gap-2">
+                <SelectValue placeholder="Select availability" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="FICTION">FICTION</SelectItem>
+                  <SelectItem value="NON_FICTION">NON_FICTION</SelectItem>
+                  <SelectItem value="SCIENCE">SCIENCE</SelectItem>
+                  <SelectItem value="HISTORY">HISTORY</SelectItem>
+                  <SelectItem value="BIOGRAPHY">BIOGRAPHY</SelectItem>
+                  <SelectItem value="FANTASY">FANTASY</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+
+            </Select>
           </div>
           <div className="grid gap-2">
             <Label htmlFor="isbn" className="inline-flex items-center gap-2">
@@ -138,11 +173,31 @@ export default function EditBookDialog({ trigger, book }: EditBookDialogProps) {
             <Input
               id="copies"
               type="number"
-              min={0}
-              value={form.copies ?? 0}
+              min={1}
+              value={form.copies ?? 1}
               onChange={onChange("copies")}
             />
           </div>
+          <div className="grid gap-2 mt-4">
+            <Label htmlFor="available" className="inline-flex items-center gap-2">Available</Label>
+            <Select
+              value={form.available ? "true" : "false"}
+              onValueChange={(value) => {
+                setForm((prev) => ({ ...prev, available: value === "true" }));
+              }}
+            >
+              <SelectTrigger className="inline-flex items-center gap-2">
+                <SelectValue placeholder="Select availability" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectItem value="true">True</SelectItem>
+                  <SelectItem value="false">False</SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
+          </div>
+
         </div>
 
         <AlertDialogFooter>
@@ -155,3 +210,4 @@ export default function EditBookDialog({ trigger, book }: EditBookDialogProps) {
     </AlertDialog>
   );
 }
+

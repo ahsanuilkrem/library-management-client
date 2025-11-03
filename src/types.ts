@@ -1,12 +1,25 @@
-export interface ITask {
-      title:  string,
-      author: string,
-      Genre: string,
-      ISBN: string,
-      Copies: number,
-      Availability: string,
-      Actions: ["View", "Edit", "Delete"],
-}
+
+import { z } from "zod";
+
+export const genreEnum = z.enum([
+  "FICTION",
+  "NON_FICTION",
+  "SCIENCE",
+  "HISTORY",
+  "BIOGRAPHY",
+  "FANTASY",
+]);
+
+// Validation Schema
+export const bookFormSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  author: z.string().min(1, "Author is required"),
+  isbn: z.string().min(1, "ISBN is required"),
+  genre:genreEnum,
+  description: z.string().optional(),
+  copies: z.string().min(1, "At least 1 copy required"),
+  available: z.boolean().optional(),
+});
 
 export type Genre = 
   | "FICTION"
@@ -25,8 +38,7 @@ export interface IBook {
   description?: string;
   copies: number;
   available?: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+ 
 
 }
 

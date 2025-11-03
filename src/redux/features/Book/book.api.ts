@@ -5,12 +5,12 @@ import type {  IBorrow, IResponse } from "@/types";
  const BooksApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
          createBook: builder.mutation({
-                query: (bookData) => ({
+                query: (payload) => ({
                 url: "/books/create",
                 method: "POST",
-                data: bookData,
+                body: payload,
             }),
-            invalidatesTags: ["BOOK"]
+             invalidatesTags: ["BOOK"]
          }),
           getBooks: builder.query({
                 query: () => ({
@@ -22,10 +22,11 @@ import type {  IBorrow, IResponse } from "@/types";
         }),
 
             updateBook: builder.mutation({
-                query: ({ id, data }) => ({
+                query: ({ id, body }) => ({
                 url: `/books/${id}`,
                 method: 'PATCH',
-                data,
+                body,
+           
              }),
                  invalidatesTags: ['BOOK'],
          }),
@@ -76,15 +77,7 @@ export const {
 
 // const initialState:  = {
 //    book:[
-//     {
-//     title: "To Kill a Mockingbird",
-//     author: "Harper Lee",
-//     Genre: "Classic Fiction",
-//     ISBN: "9780061120084",
-//     Copies: 5,
-//     Availability: "Available",
-//     Actions: ["View", "Edit", "Delete"],
-//   },
+
 //    {
 //     title: "1984",
 //     author: "George Orwell",
@@ -95,14 +88,7 @@ export const {
 //     Actions: ["View", "Edit", "Delete"]
 //   },
 //   {
-//     title: "The Great Gatsby",
-//     author: "F. Scott Fitzgerald",
-//     Genre: "Classic Fiction",
-//     ISBN: "9780743273565",
-//     Copies: 0,
-//     Availability: "Out of Stock",
-//     Actions: ["View", "Edit", "Delete"]
-//   },
+
 //   {
 //     title: "The Catcher in the Rye",
 //     author: "J.D. Salinger",
@@ -113,7 +99,7 @@ export const {
 //     Actions: ["View", "Edit", "Delete"]
 //   },
 //   {
-//     title: "Sapiens: A Brief History of Humankind",
+//     title: "apiens: A Brief History of HumankindS",
 //     author: "Yuval Noah Harari",
 //     Genre: "Non-fiction",
 //     ISBN: "9780062316110",
