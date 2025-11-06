@@ -83,58 +83,11 @@ export const {
  } = BooksApi;
 
 
-// const initialState:  = {
-//    book:[
-
-//    {
-//     title: "1984",
-//     author: "George Orwell",
-//     Genre: "Dystopian",
-//     ISBN: "9780451524935",
-//     Copies: 2,
-//     Availability: "Limited",
-//     Actions: ["View", "Edit", "Delete"]
-//   },
-//   {
-
-//   {
-//     title: "The Catcher in the Rye",
-//     author: "J.D. Salinger",
-//     Genre: "Literary Fiction",
-//     ISBN: "9780316769488",
-//     Copies: 3,
-//     Availability: "Available",
-//     Actions: ["View", "Edit", "Delete"]
-//   },
-//   {
-//     title: "apiens: A Brief History of HumankindS",
-//     author: "Yuval Noah Harari",
-//     Genre: "Non-fiction",
-//     ISBN: "9780062316110",
-//     Copies: 4,
-//     Availability: "Available",
-//     Actions: ["View", "Edit", "Delete"]
-//   },
-//   {
-//     title: "The Hobbit",
-//     author: "J.R.R. Tolkien",
-//     Genre: "Fantasy",
-//     ISBN: "9780547928227",
-//     Copies: 1,
-//     Availability: "Limited",
-//     Actions: ["View", "Edit", "Delete"]
-//   }
-//    ],
-//    filter:"Available",
-// };
 
 
 
 
-// const bookSlice = createSlice({
-//   name: "book",
-//   initialState,
-//   reducers: {
-    
-//   },
-// })
+
+
+
+

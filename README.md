@@ -43,7 +43,7 @@ All routes are publicly accessible — no authentication required.
 ---
 
 ## 🧱 Project Structure
-
+```
 src/
 ├── api/
 │ └── api.ts 
@@ -108,7 +108,7 @@ src/
 ├── App.tsx
 ├── main.tsx
 └── index.css
-
+```
 
 ---
 

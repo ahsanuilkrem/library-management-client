@@ -5,7 +5,7 @@ import Stats from "@/components/modules/home/Stats";
 
 const Home = () => {
     return (
-        <div className="space-y-10">
+        <div className="">
             <Hero></Hero>
             <Stats />
             <AllBook />

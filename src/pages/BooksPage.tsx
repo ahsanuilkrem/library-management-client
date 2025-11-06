@@ -19,7 +19,7 @@ export default function BooksPage() {
   if (isError || !data) return <div>Error fetching books.</div>;
 
   const books: IBook[] = data;
-  console.log(books);
+  // console.log(books);
  
 
   return (
