@@ -48,7 +48,7 @@ const Stats = () => {
   return (
     <div>
       {/* Stats Section */}
-      <div className="max-w-5xl mx-auto px-4 mt-8 bg-card pt-18 pb-8 md:pt-8 md:pb-8 rounded-md text-center grid grid-cols-3 shadow ">
+      <div className="max-w-5xl mx-auto px-4 mt-20 bg-blue-100 pt-18 pb-8 md:pt-8 md:pb-8 rounded-md text-center grid grid-cols-3 shadow ">
         <div>
           {isLoading ? (
             <Skeleton className="h-12 w-24 mx-auto mb-1" />

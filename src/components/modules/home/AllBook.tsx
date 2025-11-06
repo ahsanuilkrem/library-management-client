@@ -21,11 +21,10 @@ const AllBook = () => {
     <div className="max-w-7xl mx-auto px-5 py-16">
       {/* Section Heading */}
       <div className="text-center mb-12">
-        <h1 className="relative inline-block text-4xl font-semibold tracking-tight">
-          <span className="absolute inset-x-0 inset-y-3 bottom-1 h-8 bg-[#F9C265]/50 -z-10"></span>
+        <h1 className=" inline-block text-4xl font-semibold tracking-tight text-amber-700">
           Recent Published
         </h1>
-        <p className="text-muted-foreground mt-2">
+        <p className="text-muted-foreground mt-2 ">
           Explore the latest additions to our collection
         </p>
       </div>
@@ -65,7 +64,7 @@ const AllBook = () => {
               return (
                 <Card
                   key={book._id}
-                  className="group hover:shadow-md transition-shadow duration-200"
+                  className="group hover:shadow-md transition-shadow duration-200 bg-blue-100"
                 >
                   <CardContent className="p-3 md:p-4 flex flex-col h-full">
                     <div className="flex items-start justify-between gap-1.5 md:gap-2">
@@ -111,7 +110,7 @@ const AllBook = () => {
                       <Link to={`/books/${book._id}`} className="flex-1">
                         <Button
                           size="sm"
-                          className="w-full text-xs md:text-sm"
+                          className="w-full text-xs md:text-sm hover:bg-blue-600"
                           variant="secondary"
                         >
                           View

@@ -1,3 +1,4 @@
+import { Link } from "react-router";
 
 
 const Footer = () => {
@@ -155,7 +156,7 @@ const Footer = () => {
 
         <ul className="mt-6 space-y-4 text-sm">
           <li>
-            <a href="#" className="text-gray-700 transition hover:opacity-75"> 1on1 Coaching </a>
+            <a href="#" className="text-gray-700 transition hover:opacity-75"> Book Borrow</a>
           </li>
 
           <li>
@@ -164,32 +165,30 @@ const Footer = () => {
 
           <li>
             <a href="#" className="text-gray-700 transition hover:opacity-75"> Accounts Review </a>
-          </li>
-
-          <li>
-            <a href="#" className="text-gray-700 transition hover:opacity-75"> HR Consulting </a>
-          </li>
-
-          <li>
-            <a href="#" className="text-gray-700 transition hover:opacity-75"> SEO Optimisation </a>
-          </li>
+          </li>   
         </ul>
       </div>
 
       <div>
-        <p className="font-medium text-gray-900">Company</p>
+        <p className="font-medium text-gray-900">Quick Links</p>
 
         <ul className="mt-6 space-y-4 text-sm">
           <li>
-            <a href="#" className="text-gray-700 transition hover:opacity-75"> About </a>
+            <Link to="/" className="text-gray-700 transition hover:opacity-75"> Home </Link>
           </li>
 
           <li>
-            <a href="#" className="text-gray-700 transition hover:opacity-75"> Meet the Team </a>
+           <Link to="/booksPage" className="text-gray-700 transition hover:opacity-75">All Books </Link>
+          </li>
+          <li>
+           <Link to="/addbook" className="text-gray-700 transition hover:opacity-75">Add Book</Link>
+          </li>
+          <li>
+           <Link to="/BorrowSummary" className="text-gray-700 transition hover:opacity-75">Borrow Summary</Link>
           </li>
 
           <li>
-            <a href="#" className="text-gray-700 transition hover:opacity-75"> Accounts Review </a>
+            <Link to="/about" className="text-gray-700 transition hover:opacity-75"> About </Link>
           </li>
         </ul>
       </div>
@@ -213,24 +212,17 @@ const Footer = () => {
       </div>
 
       <div>
-        <p className="font-medium text-gray-900">Legal</p>
+        <p className="font-medium text-gray-900">Connect</p>
 
         <ul className="mt-6 space-y-4 text-sm">
           <li>
-            <a href="#" className="text-gray-700 transition hover:opacity-75"> Accessibility </a>
+            <h2 className="text-gray-700 transition hover:opacity-75"> ahsanulkarim429@gmail.com</h2>
           </li>
 
           <li>
-            <a href="#" className="text-gray-700 transition hover:opacity-75"> Returns Policy </a>
+            <a href="#" className="text-gray-700 transition hover:opacity-75"> 01642-904811</a>
           </li>
 
-          <li>
-            <a href="#" className="text-gray-700 transition hover:opacity-75"> Refund Policy </a>
-          </li>
-
-          <li>
-            <a href="#" className="text-gray-700 transition hover:opacity-75"> Hiring-3 Statistics </a>
-          </li>
         </ul>
       </div>
     </div>

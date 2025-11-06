@@ -1,5 +1,5 @@
 import baseApi from "@/redux/baseApi";
-import type {  IBorrow, IResponse } from "@/types";
+import type {  IBook, IBorrow, IResponse } from "@/types";
 
 
  const BooksApi = baseApi.injectEndpoints({
@@ -20,6 +20,13 @@ import type {  IBorrow, IResponse } from "@/types";
                 providesTags: ["BOOK"],
                 transformResponse: (response) => response.data
         }),
+                 getBookById: builder.query<{ data: IBook }, string>({
+                    query: (id) => ({
+                        url: `/books/${id}`,
+                        method: "GET"
+                    }),
+                    providesTags: ["BOOK"],
+                }),
 
             updateBook: builder.mutation({
                 query: ({ id, body }) => ({
@@ -68,6 +75,7 @@ import type {  IBorrow, IResponse } from "@/types";
 export const {
     useCreateBookMutation,
     useGetBooksQuery,
+    useGetBookByIdQuery,
     useUpdateBookMutation, 
     useDeleteBookMutation,
     useBorrowBookMutation,

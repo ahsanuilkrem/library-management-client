@@ -1,13 +1,14 @@
 import { Button } from "@/components/ui/button";
-// import hero from "@/assets/hero.png";
+import hero from "../../../assets/book_img.jpg";
 import { Link } from "react-router";
+
 
 const Hero = () => {
   return (
     <div>
-      {/* ===== Desktop / Large screens ===== */}
-      <div className="hidden md:block">
-        <div className="mt-28 max-w-7xl mx-auto px-5">
+  
+       <div className="hidden md:block bg-[#f8c36b]">
+        <div className="pt-28 px-5 pb-10 max-w-7xl mx-auto ">
           <div className="grid grid-cols-2 justify-between items-center">
             <div className="text-6xl text-black/90 font-normal">
               Books Make <br />
@@ -19,7 +20,7 @@ const Hero = () => {
                 clutter-free experience where stories inspire and your mind
                 feels at ease.
               </p>
-              <Link to="/all-books">
+              <Link to="/booksPage">
                 <Button
                   variant="default"
                   className="mt-6 px-8 py-4 rounded-full 
@@ -31,12 +32,13 @@ const Hero = () => {
               </Link>
             </div>
           </div>
-          {/* <img src={hero} className="mx-auto w-[420px] mt-5" alt="" /> */}
+          <img src={hero} className="mx-auto w-[480px] mt-5" alt="" />
         </div>
       </div>
 
+
       {/* ===== Mobile / Small screens ===== */}
-      <div className="block md:hidden py-20 h-[558px]">
+      <div className="block md:hidden  h-[558px]">
         <div className="bg-[#f8c36b]">
           <div className="">
             <div className="text-center px-5">
@@ -48,7 +50,7 @@ const Hero = () => {
                 clutter-free experience where stories inspire and your mind
                 feels at ease.
               </p>
-              <Link to="/all-books">
+              <Link to="/booksPage">
                 <Button
                   variant="default"
                   className="mt-6 px-8 py-4 rounded-full 
@@ -58,7 +60,7 @@ const Hero = () => {
                   Explore Now
                 </Button>
               </Link>
-              {/* <img src={hero} className="mx-auto w-[280px] mt-8" alt="" /> */}
+              <img src={hero} className="mx-auto w-[280px] mt-8" alt="" />
             </div>
           </div>
         </div>
